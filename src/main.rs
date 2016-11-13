@@ -1,6 +1,10 @@
 #![feature(plugin)]
 #![plugin(maud_macros)]
 
+// TODO: Only during dev
+// Cut down the noise while figuring things out
+#![allow(unused_imports)]
+
 extern crate iron;
 extern crate iron_pipeline;
 extern crate maud;
@@ -8,10 +12,8 @@ extern crate maud;
 
 use iron::prelude::*;
 use iron::status;
-use iron::middleware::{ Handler };
 
 use iron_pipeline::prelude::*;
-use iron_pipeline::{ Middleware, PipelineNext };
 
 mod templates;
 mod routes;

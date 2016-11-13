@@ -1,14 +1,15 @@
+pub mod markup;
+pub mod master;
+
 use maud::*;
 
-pub fn not_found() -> Markup {
-    html! {
-        h1 "Whoops! 404"
-        p "Whatever you were looking for, we couldn't find it."
-    }
-}
+pub use self::master::Master;
 
-pub fn hello_world(name: &str) -> Markup {
-    html! {
-        p { "Hello, " (name) "." }
-    }
+pub fn not_found() -> Markup {
+    Master::new("404 Not Found".into())
+        .with_body(html! {
+            h1 "Whoops! 404"
+            p "Whatever you were looking for, we couldn't find it."
+        })
+        .render_once()
 }
