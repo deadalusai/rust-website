@@ -4,6 +4,7 @@
 extern crate iron;
 extern crate iron_pipeline;
 extern crate maud;
+#[macro_use] extern crate router;
 
 use iron::prelude::*;
 use iron::status;
@@ -13,6 +14,7 @@ use iron_pipeline::prelude::*;
 use iron_pipeline::{ Middleware, PipelineNext };
 
 mod templates;
+mod routes;
 
 fn log_request(req: &Request) {
     println!("{} {}", req.method, req.url);
@@ -42,16 +44,18 @@ fn main() {
             Err(err) => {
                 println!("Error {}", err.error);
                 log_response(&err.response);
+                // Hack: custom error messages
+                if err.error.is::<router::NoRoute>() {
+                    let markup = templates::not_found();
+                    let res = Response::with((status::NotFound, markup));
+                    return Ok(res);
+                }
                 Err(err)
             }
         }
     }));
 
-    app.add(Handle(|_| {
-        let markup = templates::hello_world("Ben");
-
-        Ok(Response::with((status::Ok, markup)))
-    }));
+    app.add(routes::build());
 
     // Start webserver
     let port = 1337;
