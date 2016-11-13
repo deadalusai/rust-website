@@ -1,0 +1,9 @@
+[package]
+name = "website"
+version = "0.1.0"
+authors = ["Benjamin Fox <deadalus.ai@gmail.com>"]
+
+[dependencies]
+iron = "0.4.0"
+maud = "0.13.0"
+iron-pipeline = { git = "https://github.com/deadalusai/iron-pipeline" }
