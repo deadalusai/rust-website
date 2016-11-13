@@ -1,3 +1,6 @@
+#![feature(plugin)]
+#![plugin(maud_macros)]
+
 extern crate iron;
 extern crate iron_pipeline;
 extern crate maud;
@@ -8,6 +11,8 @@ use iron::middleware::{ Handler };
 
 use iron_pipeline::prelude::*;
 use iron_pipeline::{ Middleware, PipelineNext };
+
+mod templates;
 
 fn log_request(req: &Request) {
     println!("{} {}", req.method, req.url);
@@ -43,7 +48,9 @@ fn main() {
     }));
 
     app.add(Handle(|_| {
-        Ok(Response::with((status::Ok, "Hello, World")))
+        let markup = templates::hello_world("Ben");
+
+        Ok(Response::with((status::Ok, markup)))
     }));
 
     // Start webserver
