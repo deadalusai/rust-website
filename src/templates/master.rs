@@ -37,15 +37,11 @@ impl RenderOnce for Master {
                 head {
                     title (self.title)
                     (Css("/s/css/main.css"))
-                    @if let Some(m) = self.head {
-                        (m)
-                    }
+                    @if let Some(m) = self.head { (m) }
                 }
                 body {
                     div.body {
-                        @if let Some(m) = self.body {
-                            (m)
-                        }
+                        @if let Some(m) = self.body { (m) }
                     }
                 }
             }
