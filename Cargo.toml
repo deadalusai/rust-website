@@ -7,5 +7,6 @@ authors = ["Benjamin Fox <deadalus.ai@gmail.com>"]
 iron = "0.4.0"
 iron-pipeline = { git = "https://github.com/deadalusai/iron-pipeline" }
 router = "0.4.0"
+staticfile = "0.3.1"
 maud = { version = "0.13.0", features = ["iron"] }
 maud_macros = "0.13.0"

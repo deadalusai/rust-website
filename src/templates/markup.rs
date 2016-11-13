@@ -1,7 +1,7 @@
 use maud::{Markup, Render};
 
 /// Links to a CSS stylesheet at the given path.
-struct Css(&'static str);
+pub struct Css(pub &'static str);
 
 impl Render for Css {
     fn render(&self) -> Markup {

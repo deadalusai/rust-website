@@ -1,40 +1,42 @@
 use maud::*;
 use std::borrow::Cow;
 
+use templates::markup::Css;
+
 /// Master page
-pub struct Master<'a> {
-    title: Cow<'a, str>,
+pub struct Master {
+    title: String,
     head: Option<Markup>,
     body: Option<Markup>,
 }
 
-impl <'a> Master<'a> {
-    pub fn new(title: Cow<'a, str>) -> Master<'a> {
+impl Master {
+    pub fn new<T: Into<String>>(title: T) -> Master {
         Master {
-            title: title,
+            title: title.into(),
             head: None,
             body: None
         }
     }
 
-    pub fn with_head(mut self, head: Markup) -> Master<'a> {
+    pub fn with_head(mut self, head: Markup) -> Master {
         self.head = Some(head);
         self
     }
 
-    pub fn with_body(mut self, body: Markup) -> Master<'a> {
+    pub fn with_body(mut self, body: Markup) -> Master {
         self.body = Some(body);
         self
     }
 }
 
-impl <'a> RenderOnce for Master<'a> {
+impl RenderOnce for Master {
     fn render_once(self) -> Markup {
-        html_debug! {
+        html! {
             html {
                 head {
                     title (self.title)
-                    style ".body { width: 900px; margin: 0 auto; padding: 0 20px; }"
+                    (Css("/s/css/main.css"))
                     @if let Some(m) = self.head {
                         (m)
                     }

@@ -7,7 +7,7 @@ use templates::Master;
 pub fn handle(_: &mut Request) -> IronResult<Response> {
 
     let markup =
-        Master::new("Home".into())
+        Master::new("Home")
             .with_body(html! {
                 h1 { "Home" }
                 p { "Hello, user." }

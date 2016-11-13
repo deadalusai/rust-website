@@ -9,6 +9,10 @@ extern crate iron;
 extern crate iron_pipeline;
 extern crate maud;
 #[macro_use] extern crate router;
+extern crate staticfile;
+
+use std::path::Path;
+use std::io;
 
 use iron::prelude::*;
 use iron::status;
@@ -55,6 +59,12 @@ fn main() {
                 Err(err)
             }
         }
+    }));
+
+    // wwwroot served from /s
+    app.add(Fork::when_path("/s", |s| {
+        use staticfile::Static;
+        s.add(Static::new(Path::new("./wwwroot/")));
     }));
 
     app.add(routes::build());
